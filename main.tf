@@ -23,7 +23,7 @@ resource "aws_appautoscaling_target" "ignore_changes_min_max_capacity" {
 }
 
 resource "aws_appautoscaling_policy" "default" {
-  count              = module.this.enabled && length(var.schedule) == 0 ? 1 : 0
+  count              = module.this.enabled == 0 ? 1 : 0
   name               = module.this.id
   policy_type        = "TargetTrackingScaling"
   resource_id        = try(aws_appautoscaling_target.default[0], aws_appautoscaling_target.ignore_changes_min_max_capacity[0]).resource_id
